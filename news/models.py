@@ -46,6 +46,15 @@ class PostCategory(models.Model):
         return f"{self.post.title} - {self.category.name}"
 
 
+class News(models.Model):
+    title = models.CharField(max_length=100)
+    publication_date = models.DateField()
+    text = models.TextField()
+
+    def __str__(self):
+        return self.title  # Определяем, что использовать как строковое представление объекта
+
+
 # Модель Post
 class Post(models.Model):
     ARTICLE = 'AR'
@@ -79,7 +88,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)  # Добавляем связь с моделью Author
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, default=None)  # Добавляем связь с моделью Author
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()

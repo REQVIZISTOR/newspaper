@@ -1,0 +1,9 @@
+{% extends "flatpages/default.html" %}
+
+{% load censor %}  # Эта строка загружает ваши собственные фильтры
+
+{% block content %}
+  <h2>{{ news.title }}</h2>
+  <p>{{ news.text|censor }}</p>
+  <p>Дата публикации: {{ news.publication_date|date:"d.m.Y" }}</p>
+{% endblock %}
