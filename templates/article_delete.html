@@ -1,0 +1,15 @@
+{% extends "flatpages/default.html" %}
+
+{% load censor %}
+
+{% block title %}
+<h2>Удалить статью</h2>
+<p>Вы уверены, что хотите удалить эту статью?</p>
+{% endblock title %}
+
+{% block content %}
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Удалить</button>
+    </form>
+{% endblock content %}

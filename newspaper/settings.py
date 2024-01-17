@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'news',
+    'django_filters',
 ]
 
+
+PAGINATION_DEFAULT_PAGINATION = 5
 
 SITE_ID = 1
 

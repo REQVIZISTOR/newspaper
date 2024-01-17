@@ -1,0 +1,15 @@
+{% extends "flatpages/default.html" %}
+
+{% load censor %}
+
+{% block title %}
+<h2>Редактировать статью</h2>
+{% endblock title %}
+
+{% block content %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Сохранить изменения</button>
+    </form>
+{% endblock content %}

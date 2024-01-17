@@ -50,9 +50,20 @@ class News(models.Model):
     title = models.CharField(max_length=100)
     publication_date = models.DateField()
     text = models.TextField()
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.title  # Определяем, что использовать как строковое представление объекта
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    publication_date = models.DateField()
+    text = models.TextField()
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return self.title
 
 
 # Модель Post

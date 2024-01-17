@@ -9,6 +9,24 @@
 {% block content %}
   <h1>Список новостей</h1>
 
+  {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+   <form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filterset.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input type="submit" value="Найти" />
+   </form>
+
+   <label for="meeting-time">Choose a time for your appointment:</label>
+
+    <input
+      type="datetime-local"
+      id="meeting-time"
+      name="meeting-time"
+      value="2023-01-10T12:00"
+      min="2023-01-01T00:00"
+      max="2025-01-01T00:00" />
+
   <hr>
   {% if news_list %}
     <table>
@@ -50,3 +68,8 @@
         {% endif %}
       {% endblock pagination %}
 {% endblock content %}
+
+
+
+
+
