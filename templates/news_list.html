@@ -10,12 +10,22 @@
   <h1>Список новостей</h1>
 
   <hr>
+
+  {% if perms.news.add_news %}
+    <a href="{% url 'news:news_create' %}">Добавить новость</a>
+    {% endif %}
   {% if news_list %}
     <table>
         <tr>
             <td>Заголовок</td>
             <td>Дата</td>
             <td>Описание</td>
+            <td>Категория</td>
+
+            {% if perms.news.change_product or perms.news.delete_product %}
+            <td>Действия</td>
+            {% endif %}
+
         </tr>
 
         {% for news in news_list %}
@@ -23,7 +33,18 @@
             <td>{{ news.title }}</td>
             <td>{{ news.publication_date|date:"d.m.Y" }}</td>
             <td>{{ news.text|slice:":20"|censor }}</td>
+            <td>{{ news.category }}</td>
             <td><a href="{% url 'news:news_detail' pk=news.pk %}">Подробнее</a></td>
+
+            <td>
+                {% if perms.news.change_product %}
+                <a href="{% url 'news:news_edit' pk=news.pk %}">Изменить</a>
+                {% endif %}
+                {% if perms.news.delete_product %}
+                <a href="{% url 'news:news_delete' pk=news.pk %}">Удалить</a>
+                {% endif %}
+            </td>
+
         </tr>
         {% endfor %}
 

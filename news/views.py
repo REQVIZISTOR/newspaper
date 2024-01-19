@@ -6,6 +6,8 @@ from .models import News
 from .forms import NewsForm
 from django.utils import timezone
 from django.urls import reverse_lazy
+#from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 # Create your views here.
@@ -51,7 +53,9 @@ class NewsSearch(FilterView):
         return context
 
 
-class NewsCreateView(CreateView):
+class NewsCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_product',)
+    raise_exception = True
     form_class = NewsForm
     model = News
     template_name = 'news_create.html'
@@ -63,14 +67,17 @@ class NewsCreateView(CreateView):
         form.instance.publication_date = timezone.now()  # Устанавливаем текущую дату и время
         return super().form_valid(form)
 
-class NewsUpdateView(UpdateView):
+
+class NewsUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_product',)
     model = News
     form_class = NewsForm
     template_name = 'news_edit.html'
     success_url = reverse_lazy('news:news_list')
 
 
-class NewsDeleteView(DeleteView):
+class NewsDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_product',)
     model = News
     template_name = 'news_delete.html'
     success_url = reverse_lazy('news:news_list')
