@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    'django_apscheduler',
 ]
 
 
@@ -60,9 +61,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
+ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 
 
 MIDDLEWARE = [
@@ -153,3 +154,25 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "pup0k2024@yandex.ru"
+EMAIL_HOST_PASSWORD = "tjfxxtiugwunsbmu"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "pup0k2024@yandex.ru"
+
+SERVER_EMAIL = "pup0k2024@yandex.ru"
+
+MANAGERS = (
+    ('Ivan', 'mrre2112@gmail.com'),
+)
+
+ADMINS = (
+    ('Roman', 'roman.trunoff2015@yandex.ru'),
+)

@@ -4,6 +4,8 @@ from django.db.models import Sum, F
 from django.template.defaultfilters import truncatechars
 from decimal import Decimal
 from typing import Any
+from django.core.validators import MinValueValidator
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -52,8 +54,13 @@ class News(models.Model):
     text = models.TextField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE, default=1)
 
+
     def __str__(self):
-        return self.title  # Определяем, что использовать как строковое представление объекта
+        return f'{self.title}: {self.text[:10]}'
+
+    def get_absolute_url(self):
+        return reverse('news:news_detail', args=[str(self.id)])
+
 
 
 class Article(models.Model):
@@ -119,3 +126,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.post.title}"
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+    )
+    category = models.ForeignKey(
+        to='Category',
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+    )

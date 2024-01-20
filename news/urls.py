@@ -9,6 +9,7 @@ from .views import (
     ArticleCreateView,
     ArticleEditView,
     ArticleDeleteView,
+    subscriptions,
 )
 
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('article/create/', ArticleCreateView.as_view(), name='article_create'),
     path('article/<int:pk>/update/', ArticleEditView.as_view(), name='article_edit'),
     path('article/<int:pk>/delete/', ArticleDeleteView.as_view(), name='article_delete'),
+    path('subscriptions/', subscriptions, name='subscriptions'),
 ]
