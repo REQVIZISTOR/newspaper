@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
     'django_apscheduler',
+    'board',
 ]
 
 
@@ -176,3 +177,12 @@ MANAGERS = (
 ADMINS = (
     ('Roman', 'roman.trunoff2015@yandex.ru'),
 )
+
+
+CELERY_BROKER_URL = 'redis://default:XRoPnRaS8L4frSnn8ZR5HQza9C1GhRSv@redis-10551.c281.us-east-1-2.ec2.cloud.redislabs.com:10551'
+CELERY_RESULT_BACKEND = 'redis://default:XRoPnRaS8L4frSnn8ZR5HQza9C1GhRSv@redis-10551.c281.us-east-1-2.ec2.cloud.redislabs.com:10551'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
