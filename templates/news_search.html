@@ -2,9 +2,12 @@
 
 {% load censor %}
 
-{% block title %}
-Новости
-{% endblock title %}
+{% load cache %}
+    {% cache 30 title %}
+    {% block title %}
+    Новости
+    {% endblock title %}
+    {% endcache %}
 
 {% block content %}
   <h1>Список новостей</h1>

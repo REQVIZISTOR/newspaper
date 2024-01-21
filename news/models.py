@@ -6,7 +6,7 @@ from decimal import Decimal
 from typing import Any
 from django.core.validators import MinValueValidator
 from django.urls import reverse
-
+from django.core.cache import cache
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
@@ -61,6 +61,10 @@ class News(models.Model):
     def get_absolute_url(self):
         return reverse('news:news_detail', args=[str(self.id)])
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'product-{self.pk}')
+
 
 
 class Article(models.Model):
@@ -71,6 +75,11 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'product-{self.pk}')
 
 
 # Модель Post

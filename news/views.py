@@ -13,6 +13,9 @@ from django.db.models import Exists, OuterRef
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
 
 
 # Create your views here.
@@ -23,6 +26,10 @@ class NewsList(ListView):
     ordering = ['-publication_date']
     paginate_by = 5  # указываем количество новостей на странице
 
+    @method_decorator(cache_page(60 * 1))  # Кэширование страницы на 5 минут
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
 
 class NewsDetail(DetailView):
     # Модель всё та же, но мы хотим получать информацию по отдельному товару
@@ -31,6 +38,18 @@ class NewsDetail(DetailView):
     template_name = 'news_detail.html'
     # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'news'
+
+    @method_decorator(cache_page(60 * 5))  # Кэширование страницы на 5 минут
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'product-{self.kwargs["pk"]}',
+                        None)
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'product-{self.kwargs["pk"]}', obj)
+            return obj
 
 
 class NewsSearch(FilterView):

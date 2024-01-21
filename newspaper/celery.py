@@ -11,8 +11,9 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'action_every_monday_8am': {
-        'task': 'action',
+        'task': 'your_task_name',  # Замените 'action' на имя вашей задачи
         'schedule': crontab(hour=8, minute=0, day_of_week='monday'),
-        'args': (agrs),
+        # Помните, что если ваша задача не принимает аргументы, вы можете пропустить 'args'
+        # 'args': (agrs),  # Уберите эту строчку, если ваша задача не принимает аргументы
     },
 }
